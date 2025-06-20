@@ -37,4 +37,3 @@ def get_tracks_from_playlist(playlist_url):
         else:
             break
     logging.info(f"Retrieved {len(tracks)} tracks.")
-    return tracks
