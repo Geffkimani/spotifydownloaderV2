@@ -1,3 +1,5 @@
 spotipy
 yt-dlp
 python-dotenv
+tqdm
+gradio

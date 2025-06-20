@@ -1,0 +1,17 @@
+2025-06-20 13:45:51,626 - INFO - Retrieved 5 tracks.
+2025-06-20 13:50:58,230 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-20 13:51:20,622 - INFO - Retrieved 5 tracks.
+2025-06-20 13:51:20,624 - INFO - Downloading: Texas BigXthaPlug
+2025-06-20 13:51:59,368 - INFO - Downloading: Last Of My Kind (feat. Paul Cauthen) Shaboozey
+2025-06-20 13:52:43,471 - INFO - Downloading: Drink Don't Need No Mix (feat. BigXthaPlug) Shaboozey
+2025-06-20 13:53:22,514 - INFO - Downloading: Back On My BS BigXthaPlug
+2025-06-20 13:53:54,903 - INFO - Downloading: Let It All Work Out Lil Wayne
+2025-06-20 13:57:05,062 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-20 13:57:10,717 - INFO - HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-06-20 13:57:10,892 - INFO - HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
+2025-06-20 13:58:01,192 - INFO - Retrieved 5 tracks.
+2025-06-20 13:58:01,240 - INFO - Downloading: Texas BigXthaPlug
+2025-06-20 13:58:55,893 - INFO - Downloading: Last Of My Kind (feat. Paul Cauthen) Shaboozey
+2025-06-20 13:59:54,305 - INFO - Downloading: Drink Don't Need No Mix (feat. BigXthaPlug) Shaboozey
+2025-06-20 14:00:38,634 - INFO - Downloading: Back On My BS BigXthaPlug
+2025-06-20 14:01:19,501 - INFO - Downloading: Let It All Work Out Lil Wayne
