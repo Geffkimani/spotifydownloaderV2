@@ -14,8 +14,13 @@ if __name__ == "__main__":
     if mode == "cli":
         url = input("Enter Spotify Playlist URL: ").strip()
         tracks = get_tracks_from_playlist(url)
-        print(f"Found {len(tracks)} tracks. Downloading...")
-        download_all_tracks(tracks)
+
+        if not tracks:
+            print("No tracks found or failed to fetch playlist.")
+        else:
+            print(f"Found {len(tracks)} tracks. Downloading...")
+            download_all_tracks(tracks)
+
     elif mode == "web":
         launch_ui()
     else:
