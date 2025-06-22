@@ -1,80 +1,74 @@
 import gradio as gr
-import json
-import os
-import logging
 from spotify_api import get_tracks_from_playlist
-from utils import download_track_with_status
+from utils import download_all_tracks
 
-# Setup
-LOGS_DIR = "logs"
-os.makedirs(LOGS_DIR, exist_ok=True)
-logging.basicConfig(filename=os.path.join(LOGS_DIR, "web_ui.log"), level=logging.INFO)
 
-def fetch_tracks(url):
-    """
-    Fetch tracks from Spotify playlist URL.
-    """
+def handle_fetch(url):
     try:
         tracks = get_tracks_from_playlist(url)
-        choices = [f"{t['name']} - {t['artists'][0]['name']}" for t in tracks]
-        # Store the full track info for later download
-        return choices, tracks, "✅ Tracks loaded."
+        if not tracks:
+            raise ValueError("No tracks found in the playlist.")
+
+        # Format display labels and preserve IDs
+        display_names = [f"{t['name']} - {t['artists'][0]['name']}" for t in tracks]
+        track_map = {t["id"]: t for t in tracks}
+
+        return (
+            gr.update(choices=display_names, value=display_names, visible=True),
+            gr.update(visible=True),
+            track_map,
+            f"✅ Loaded {len(tracks)} track(s) from playlist."
+        )
     except Exception as e:
-        logging.error(f"Error loading playlist: {e}")
-        return [], [], f"❌ Error: {str(e)}"
-
-def download_selected(selected_titles, full_tracks):
-    """
-    Download selected tracks by matching titles.
-    """
-    if not selected_titles:
-        return "⚠️ No tracks selected."
-
-    results = []
-    for track in full_tracks:
-        title = f"{track['name']} - {track['artists'][0]['name']}"
-        if title in selected_titles:
-            success = download_track_with_status(title)
-            status = "✅ Success" if success else "❌ Failed"
-            results.append(f"{title} — {status}")
-    return "\n".join(results)
-
-def launch_ui():
-    with gr.Blocks(title="🎧 Spotify Downloader") as demo:
-        gr.Markdown("## 🎵 Spotify Playlist Downloader")
-        gr.Markdown("Paste a Spotify playlist URL. View and select songs to download.")
-
-        url_input = gr.Textbox(label="Spotify Playlist URL")
-        fetch_button = gr.Button("🔍 Fetch Songs")
-
-        song_selector = gr.CheckboxGroup(label="Select Songs", choices=[], visible=False)
-        full_track_state = gr.State([])
-
-        download_button = gr.Button("⬇️ Download Selected", visible=False)
-        output_box = gr.Textbox(label="Status", lines=10, interactive=False)
-
-        def handle_fetch(url):
-            titles, full_tracks, status = fetch_tracks(url)
-            return (
-                gr.update(choices=titles, visible=True, value=[]),
-                full_tracks,
-                gr.update(value=status),
-                gr.update(visible=True)
-            )
-
-        def handle_download(selected_titles, full_tracks):
-            return download_selected(selected_titles, full_tracks)
-
-        fetch_button.click(
-            fn=handle_fetch,
-            inputs=url_input,
-            outputs=[song_selector, full_track_state, output_box, download_button]
+        return (
+            gr.update(choices=[], value=[], visible=False),
+            gr.update(visible=False),
+            {},
+            f"❌ Error: {str(e)}"
         )
 
-        download_button.click(
+
+def handle_download(selected_display_names, track_map):
+    if not selected_display_names:
+        return "⚠️ No tracks selected."
+
+    # Map display names back to track objects
+    selected_tracks = []
+    for t in track_map.values():
+        label = f"{t['name']} - {t['artists'][0]['name']}"
+        if label in selected_display_names:
+            selected_tracks.append(t)
+
+    download_all_tracks(selected_tracks)
+    return f"✅ Downloaded {len(selected_tracks)} track(s)!"
+
+
+def launch_ui():
+    with gr.Blocks(title="Spotify Playlist Downloader") as demo:
+        gr.Markdown("## 🎧 Spotify Playlist Downloader")
+        gr.Markdown("Paste a Spotify playlist URL and select which tracks to download as MP3.")
+
+        url_input = gr.Textbox(label="Spotify Playlist URL", placeholder="Paste URL here...")
+        fetch_btn = gr.Button("🔍 Fetch Tracks")
+        download_btn = gr.Button("⬇️ Download Selected Tracks", visible=False)
+        track_selector = gr.CheckboxGroup(label="Tracks in Playlist", visible=False)
+        status_box = gr.Textbox(label="Status", interactive=False)
+        track_state = gr.State({})  # {track_id: track_data}
+
+        fetch_btn.click(
+            fn=handle_fetch,
+            inputs=url_input,
+            outputs=[track_selector, download_btn, track_state, status_box]
+        )
+
+        download_btn.click(
             fn=handle_download,
-            inputs=[song_selector, full_track_state],
-            outputs=output_box
+            inputs=[track_selector, track_state],
+            outputs=status_box
         )
 
     demo.launch()
+
+
+if __name__ == "__main__":
+    launch_ui()
