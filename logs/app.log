@@ -38,3 +38,15 @@
 2025-06-20 14:46:32,469 - INFO - Downloading: Drink Don't Need No Mix (feat. BigXthaPlug) Shaboozey
 2025-06-20 14:47:19,518 - INFO - Downloading: Back On My BS BigXthaPlug
 2025-06-20 14:48:06,219 - INFO - Downloading: Let It All Work Out Lil Wayne
+2025-06-21 13:26:01,427 - INFO - HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-06-21 13:26:01,802 - INFO - HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
+2025-06-21 13:28:06,625 - INFO - Retrieved 5 tracks.
+2025-06-21 13:28:20,646 - INFO - Retrieved 5 tracks.
+2025-06-22 14:21:19,465 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-22 14:21:24,054 - INFO - HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-06-22 14:21:24,279 - INFO - HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
+2025-06-22 14:22:03,028 - INFO - Retrieved 5 tracks.
+2025-06-22 14:22:03,043 - INFO - Downloading: Texas BigXthaPlug
+2025-06-22 14:22:35,181 - INFO - Downloading: Last Of My Kind (feat. Paul Cauthen) Shaboozey
+2025-06-22 14:22:46,583 - ERROR - Download failed for 'Last Of My Kind (feat. Paul Cauthen) Shaboozey' with error: Command '['yt-dlp', '--extract-audio', '--audio-format', 'mp3', '--add-metadata', '--embed-thumbnail', '-o', '/home/Kimani/Downloads/music/%(title)s.%(ext)s', 'ytsearch1:Last Of My Kind (feat. Paul Cauthen) Shaboozey']' returned non-zero exit status 1.
+2025-06-22 14:22:46,584 - INFO - Downloading: Drink Don't Need No Mix (feat. BigXthaPlug) Shaboozey

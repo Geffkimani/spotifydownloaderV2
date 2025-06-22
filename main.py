@@ -25,4 +25,3 @@ if __name__ == "__main__":
         launch_ui()
     else:
         print("Invalid mode.")
-

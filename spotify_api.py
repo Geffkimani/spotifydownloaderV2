@@ -1,13 +1,9 @@
-# spotify_api.py
-
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import re
 import logging
 from dotenv import load_dotenv
-import os
 
-# Load credentials from .env
 load_dotenv()
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
 
@@ -24,7 +20,7 @@ def get_tracks_from_playlist(playlist_url):
     try:
         results = sp.playlist_items(
             playlist_id,
-            additional_types=('track',),  # Essential for real tracks
+            additional_types=('track',),
             limit=100
         )
 
@@ -34,6 +30,7 @@ def get_tracks_from_playlist(playlist_url):
                 track = item.get("track")
                 if track:
                     tracks.append({
+                        "id": track.get("id"),  # Add track ID
                         "name": track.get("name"),
                         "artists": [{"name": artist.get("name")} for artist in track.get("artists", [])],
                     })
